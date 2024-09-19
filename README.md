@@ -10,7 +10,7 @@
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/endlessalpacaYT/Arcane-Backend-V2/
+git clone https://github.com/endlessalpacaYT/Arcane-Backend-V3/
 ```
 
 2. **Install packages**
