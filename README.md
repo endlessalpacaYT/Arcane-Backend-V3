@@ -1,8 +1,8 @@
 # Recent Changes
-## v0.1
-- Got Into Lobby
-- Converted most stuff from v2 to fastify
-- Expect rewrite on most routes
+## v0.12
+- Proper Authentication
+- Database Integration
+- Discord Bot Integration
 
 ## Requirements
 - [nodes](https://nodejs.org/en)
@@ -41,7 +41,7 @@ node index.js
 
 - [x] Login
 - [x] Easy setup
-- [ ] Database (MongoDB)
+- [x] Database (MongoDB)
 - [ ] Auto shop
 - [ ] Battle Pass
 - [ ] Challenges
@@ -49,7 +49,7 @@ node index.js
 - [ ] XMPP
 - [ ] Working MCP
 - [ ] NewsV2
-- [ ] Discord Bot Integration
+- [x] Discord Bot Integration
 - [ ] Matchmaker 
 - [ ] Party V1
 - [ ] Party V2
@@ -68,6 +68,6 @@ node index.js
 
 ## Planned Bot Commands
 
-- [ ] Register command
-- [ ] Pinged command
+- [x] Register command
+- [x] Pinged command
 - [ ] User lookup command
