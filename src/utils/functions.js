@@ -1,3 +1,10 @@
+const XMLBuilder = require("xmlbuilder");
+const uuid = require("uuid");
+const bcrypt = require("bcrypt");
+const fs = require("fs");
+const crypto = require("crypto");
+const path = require("path");
+
 function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -62,7 +69,12 @@ function GetVersionInfo(req) {
     return memory;
 }
 
+function DecodeBase64(str) {
+    return Buffer.from(str, 'base64').toString();
+}
+
 module.exports = {
     timeout,
-    GetVersionInfo
+    GetVersionInfo,
+    DecodeBase64
 }

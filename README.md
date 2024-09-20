@@ -2,10 +2,9 @@
 - First Public Backend Written In Fastify!
 
 # Recent Changes
-## v0.12
-- Proper Authentication
-- Database Integration
-- Discord Bot Integration
+## v0.15
+- Changed how the token gets issued to prevent some random logout occurances
+- Added more grant types
 
 ## Requirements
 - [nodes](https://nodejs.org/en)
@@ -74,3 +73,21 @@ node index.js
 - [x] Register command
 - [x] Pinged command
 - [ ] User lookup command
+
+## Contributing Guide:
+
+### All Contributions Are Reviewed!
+We welcome contributions but ask that you follow these guidelines:
+
+1. **No Stolen Code ('Skidding')**: Ensure that all contributions are original. We do not accept code taken from other projects (e.g., LawinserverV2).
+   
+2. **Focus on Incremental Changes**: As this is also a learning project, I ask that you avoid making overly complex or significant changes that are beyond my current level of understanding. Smaller, meaningful changes are appreciated!
+
+3. **Avoid Deleting Core Code**: Please refrain from removing large portions of the existing codebase. Certain sections may be integral to the backend’s functionality, and deleting them could break core features.
+
+### Tips for Contributing:
+- **Create a New Branch**: Always create a new branch for your contributions (e.g., `feature/[feature-name]`).
+- **Submit Small Changes**: Small bug fixes, improvements in documentation, and new features are highly encouraged.
+- **Respect the Learning Process**: Keep changes manageable and easy to review to help keep the project maintainable.
+
+Thank you for contributing to the project!
