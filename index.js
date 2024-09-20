@@ -21,6 +21,7 @@ const fastify = require('fastify')({
     }
 });
 
+const mongoose = require("mongoose");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 3551; 
@@ -62,6 +63,18 @@ fastify.get('/', async (request, reply) => {
     return { message: 'ArcaneBackendV2' };
 });
 
+async function initDB() {
+    const mongoDB = process.env.MONGODB || "mongodb://127.0.0.1/ArcaneV3";
+    try {
+        await mongoose.connect(mongoDB);
+        console.log("MongoDB connected successfully to: " + mongoDB);
+    } catch (err) {
+        console.error("MongoDB connection error:", err);
+        console.log("Closing in 5 seconds...");
+        setTimeout(() => process.exit(1), 5000); 
+    }
+}
+
 async function startMain() {
     try {
         await fastify.listen({ port: PORT });
@@ -75,6 +88,8 @@ async function startMain() {
 function startBackend() {
     console.log("ArcaneV3 Is Starting");
     startMain();
+    initDB();
+    require("./src/discord/index.js");
 }
 
 startBackend();
