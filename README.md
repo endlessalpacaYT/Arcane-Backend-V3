@@ -51,11 +51,11 @@ node index.js
 - [ ] Battle Pass
 - [ ] Challenges
 - [ ] Friends
-- [ ] XMPP
+- [x] XMPP (Partial)
 - [ ] Working MCP
 - [ ] NewsV2
 - [x] Discord Bot Integration
-- [ ] Matchmaker 
+- [x] Matchmaker (Partial) 
 - [ ] Party V1
 - [ ] Party V2
 - [ ] Daily rewards
@@ -65,7 +65,7 @@ node index.js
 - [ ] Refunding
 - [ ] Frontend
 - [x] Universal
-- [ ] API
+- [x] API
 
 ## Maybe Features?
 
