@@ -54,6 +54,7 @@ fastify.register(require('./src/routes/auth'));
 fastify.register(require('./src/routes/cloudstorage'));
 fastify.register(require('./src/routes/profiles'));
 fastify.register(require('./src/routes/mcp'));
+fastify.register(require('./src/routes/matchmaker'));
 fastify.register(require('./src/responses/athena'));
 fastify.register(require('./src/routes/version'));
 fastify.register(require('./src/routes/timeline'));
@@ -90,6 +91,7 @@ function startBackend() {
     startMain();
     initDB();
     require("./src/discord/index.js");
+    require("./src/xmpp/xmpp.js");
     require("./src/api/index.js");
 }
 

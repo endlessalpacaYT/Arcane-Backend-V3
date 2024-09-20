@@ -2,10 +2,12 @@
 - First Public Backend Written In Fastify!
 
 # Recent Changes
-## v0.2
+## v0.21
 - Added API From ArcaneV2
 - Added V1 And V2 Api Versions For Compatability
 - The Season Start And Season End Now Works
+- Matchmaker Works On 10.40 And Above
+- Removed The Log In OAuth Token Route To Ensure Safety Of Users Password
 
 ## Requirements
 - [nodes](https://nodejs.org/en)

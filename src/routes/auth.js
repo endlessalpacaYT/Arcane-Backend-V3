@@ -16,7 +16,6 @@ module.exports = async function (fastify, options) {
   fastify.post('/account/api/oauth/token', async (request, reply) => {
     let clientId;
     const token = crypto.randomBytes(32).toString('hex');
-    console.log('Received request: ', request.body);
     
     const { grant_type, username, password, token_type } = request.body || {};
 
@@ -80,6 +79,8 @@ module.exports = async function (fastify, options) {
                     error_description: 'AccountID not found in the user model'
                 })
             }
+
+            console.log("A User Is Logging Onto The Backend With The Username: " + current_username)
 
             return reply.code(200).send({
                 access_token: token,
