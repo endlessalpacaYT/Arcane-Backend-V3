@@ -2,10 +2,10 @@
 - First Public Backend Written In Fastify!
 
 # Recent Changes
-## v0.18
-- Changed how the token gets issued to prevent some random logout occurances
-- Added more grant types
-- Added some profile routes but dont work :(
+## v0.2
+- Added API From ArcaneV2
+- Added V1 And V2 Api Versions For Compatability
+- The Season Start And Season End Now Works
 
 ## Requirements
 - [nodes](https://nodejs.org/en)

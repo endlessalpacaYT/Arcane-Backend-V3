@@ -90,6 +90,7 @@ function startBackend() {
     startMain();
     initDB();
     require("./src/discord/index.js");
+    require("./src/api/index.js");
 }
 
 startBackend();

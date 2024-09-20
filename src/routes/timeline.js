@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 module.exports = async function (fastify, options) {
     const functions = require("../utils/functions.js");
 
@@ -7,13 +9,13 @@ module.exports = async function (fastify, options) {
         let activeEvents = [
             {
                 "eventType": `EventFlag.Season${memory.season}`,
-                "activeUntil": "9999-01-01T00:00:00.000Z",
-                "activeSince": "2020-01-01T00:00:00.000Z"
+                "activeUntil": process.env.API_SEASON_END,
+                "activeSince": process.env.API_SEASON_START
             },
             {
                 "eventType": `EventFlag.${memory.lobby}`,
-                "activeUntil": "9999-01-01T00:00:00.000Z",
-                "activeSince": "2020-01-01T00:00:00.000Z"
+                "activeUntil": process.env.API_SEASON_END,
+                "activeSince": process.env.API_SEASON_START
             }
         ];
 
@@ -33,9 +35,9 @@ module.exports = async function (fastify, options) {
                             seasonNumber: memory.season,
                             seasonTemplateId: `AthenaSeason:athenaseason${memory.season}`,
                             matchXpBonusPoints: 0,
-                            seasonBegin: "2020-01-01T00:00:00Z",
-                            seasonEnd: "9999-01-01T00:00:00Z",
-                            seasonDisplayedEnd: "9999-01-01T00:00:00Z",
+                            seasonBegin: process.env.API_SEASON_START,
+                            seasonEnd: process.env.API_SEASON_END,
+                            seasonDisplayedEnd: process.env.API_SEASON_END,
                             weeklyStoreEnd: "9999-01-01T00:00:00Z",
                             stwEventStoreEnd: "9999-01-01T00:00:00.000Z",
                             stwWeeklyStoreEnd: "9999-01-01T00:00:00.000Z",
