@@ -6,10 +6,6 @@ module.exports = async function (fastify, options) {
     fastify.post('/datarouter/api/v1/public/data', async (request, reply) => {
         return reply.code(200).send({ message: 'Data received' });
     });
-    
-    fastify.get('/account/api/public/account/:accountId/externalAuths', async (request, reply) => {
-        return reply.code(200).send([]);
-    }); 
 
     fastify.post('/api/v1/user/setting', async (request, reply) => {
         return reply.code(200).send({ message: "User settings updated" });

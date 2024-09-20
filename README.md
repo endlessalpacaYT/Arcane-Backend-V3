@@ -2,9 +2,10 @@
 - First Public Backend Written In Fastify!
 
 # Recent Changes
-## v0.15
+## v0.18
 - Changed how the token gets issued to prevent some random logout occurances
 - Added more grant types
+- Added some profile routes but dont work :(
 
 ## Requirements
 - [nodes](https://nodejs.org/en)

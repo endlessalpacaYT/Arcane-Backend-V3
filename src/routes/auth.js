@@ -161,11 +161,49 @@ module.exports = async function (fastify, options) {
     });
   });  
 
+  fastify.get('/account/api/public/account/:accountId/externalAuths', async (request, reply) => {
+        const { accountId } = request.params;
+
+        return reply.code(200).send({
+            accountId: accountId,
+            externalAuths: []
+        });
+    }); 
+
+    fastify.post('/account/api/oauth/recover', async (request, reply) => {
+        const { email } = request.body || {};
+
+        if (!email) {
+            return reply.code(400).send({
+                error: 'arcane.errors.missing_email',
+                error_description: 'Email address is required to recover the account.'
+            });
+        }
+        return reply.code(200).send({
+            message: `A password recovery email has been sent to ${email}`,
+            status: 'success',
+        });
+    });
+
+    fastify.post('/account/api/oauth/social_login', async (request, reply) => {
+        const { provider, token } = request.body || {};
+
+        if (!provider || !token) {
+            return reply.code(400).send({
+                error: 'arcane.errors.missing_credentials',
+                error_description: 'Provider and token are required for social login.'
+            });
+        }
+
+        return reply.code(200).send([]);
+    });
+
   fastify.delete('/account/api/oauth/sessions/kill', async (request, reply) => {
     return reply.code(200).send({ message: 'Sessions killed' });
   });
 
   fastify.delete('/account/api/oauth/sessions/kill/:token', async (request, reply) => {
+    console.log("session Killed, Token: " + request.params.token)
     return reply.code(200).send({ message: 'Session killed' });
   });  
 };
