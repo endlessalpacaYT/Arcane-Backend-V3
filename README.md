@@ -1,5 +1,8 @@
 # Recent Changes
-## v0.01
+## v0.1
+- Got Into Lobby
+- Converted most stuff from v2 to fastify
+- Expect rewrite on most routes
 
 ## Requirements
 - [nodes](https://nodejs.org/en)
@@ -36,8 +39,8 @@ node index.js
 
 ## Planned Features
 
-- [ ] Login
-- [ ] Easy setup
+- [x] Login
+- [x] Easy setup
 - [ ] Database (MongoDB)
 - [ ] Auto shop
 - [ ] Battle Pass
@@ -56,7 +59,7 @@ node index.js
 - [ ] HWID Bans
 - [ ] Refunding
 - [ ] Frontend
-- [ ] Universal
+- [x] Universal
 - [ ] API
 
 ## Maybe Features?
