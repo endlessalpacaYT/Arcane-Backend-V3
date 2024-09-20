@@ -1,3 +1,6 @@
+# Arcane Backend V3
+- First Public Backend Written In Fastify!
+
 # Recent Changes
 ## v0.12
 - Proper Authentication
