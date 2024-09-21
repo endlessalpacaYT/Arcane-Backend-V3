@@ -2,7 +2,7 @@
 - First Public Backend Written In Fastify!
 
 # Recent Changes
-## v0.23
+## v0.24
 - Added API From ArcaneV2
 - Added V1 And V2 Api Versions For Compatability
 - The Season Start And Season End Now Works
@@ -10,6 +10,7 @@
 - Removed The Log In OAuth Token Route To Ensure Safety Of Users Password
 - Added queryprofile Route
 - Added main.js
+- Authentication Is Way Better Now!
 
 ## Requirements
 - [nodes](https://nodejs.org/en)

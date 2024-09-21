@@ -34,5 +34,5 @@ module.exports = async function (fastify, options) {
           status: 'MTX Platform Set',
           profileId: request.query.profileId
         });
-      });
+    });
 }

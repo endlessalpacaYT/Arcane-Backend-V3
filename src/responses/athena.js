@@ -15,6 +15,8 @@ module.exports = async function (fastify, options) {
         
         const profilesPath = path.join(__dirname, './DefaultProfiles');
         
+        console.log("Profile Operation Recieved: " + operation);
+
         const loadProfile = (profileName) => {
           const filePath = path.join(profilesPath, `${profileName}.json`);
           if (fs.existsSync(filePath)) {
