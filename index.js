@@ -54,6 +54,7 @@ fastify.register(require('@fastify/formbody'));
 fastify.register(require('./src/routes/auth'));
 fastify.register(require('./src/routes/cloudstorage'));
 fastify.register(require('./src/routes/profiles'));
+fastify.register(require('./src/routes/user'));
 fastify.register(require('./src/routes/main'));
 fastify.register(require('./src/routes/mcp'));
 fastify.register(require('./src/routes/matchmaker'));
