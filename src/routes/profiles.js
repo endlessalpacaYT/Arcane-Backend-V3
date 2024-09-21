@@ -7,6 +7,58 @@ const BattlePass = require('../Models/profile/BattlePass.js');
 const athena = require("../responses/DefaultProfiles/athena.json");
 
 module.exports = async function (fastify, options) {
+    fastify.post('/fortnite/api/game/v2/profile/:accountId/client/PurchaseCatalogEntry', async (request, reply) => {
+        const { accountId } = request.params;
+        const { offerId, price } = request.body;
+
+        const battlePassOfferId = 'BATTLEPASS_OFFER_ID';
+        const battlePassPrice = 950;
+
+        if (offerId !== battlePassOfferId) {
+            return reply.code(404).send({
+                errorCode: "arcane.errors.offer_not_found",
+                errorMessage: "The requested offer was not found",
+                numericErrorCode: 16036
+            });
+        }
+
+        if (price !== battlePassPrice) {
+            return reply.code(400).send({
+                errorCode: "arcane.errors.invalid_price",
+                errorMessage: `The price is invalid. Expected price: ${battlePassPrice}`,
+                numericErrorCode: 16037
+            });
+        }
+
+        let battlePass = await BattlePass.findOne({ accountId: accountId });
+        if (!battlePass) {
+            battlePass = new BattlePass({ accountId: accountId });
+            await battlePass.save();
+        }
+
+        battlePass.unlocked = true;
+        await battlePass.save();
+        return reply.code(200).send({
+            "profileChanges": [
+                {
+                    "changeType": "itemAdded",
+                    "itemId": offerId,
+                    "item": {
+                        "templateId": "BattlePass",
+                        "attributes": {
+                            "battlePassPurchased": true,
+                            "battlePassTier": 1,
+                            "purchaseDate": new Date().toISOString()
+                        }
+                    }
+                }
+            ],
+            "profileRevision": 1,
+            "serverTime": new Date().toISOString(),
+            "responseVersion": 1
+        });
+    });
+    
     fastify.post('/fortnite/api/game/v2/profile/:accountId/client/QueryProfile', async (request, reply) => {
         const { accountId } = request.params;
     
@@ -27,6 +79,7 @@ module.exports = async function (fastify, options) {
         const updatedProfile = {
             ...athena,
             battlePass: {
+                unlocked: battlePass.unlocked,
                 currentLevel: battlePass.currentLevel,
                 currentTier: battlePass.currentTier,
                 unlockedRewards: battlePass.unlockedRewards

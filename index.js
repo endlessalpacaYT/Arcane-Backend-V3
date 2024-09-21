@@ -58,6 +58,7 @@ fastify.register(require('./src/routes/user'));
 fastify.register(require('./src/routes/main'));
 fastify.register(require('./src/routes/mcp'));
 fastify.register(require('./src/routes/matchmaker'));
+fastify.register(require('./src/routes/battlepass'));
 fastify.register(require('./src/responses/athena'));
 fastify.register(require('./src/routes/version'));
 fastify.register(require('./src/routes/timeline'));

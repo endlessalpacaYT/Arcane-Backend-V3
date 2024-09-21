@@ -35,4 +35,47 @@ module.exports = async function (fastify, options) {
           profileId: request.query.profileId
         });
     });
+
+    fastify.get("/fortnite/api/storefront/v2/catalog", async (request, reply) => {
+        const catalogResponse = {
+            "refreshIntervalHrs": 1,
+            "dailyPurchaseHrs": 24,
+            "expiration": new Date(Date.now() + 86400 * 1000).toISOString(),
+            "storefronts": [
+                {
+                    "name": "BATTLEPASS",
+                    "catalogEntries": [
+                        {
+                            "offerId": "BATTLEPASS_OFFER_ID",
+                            "devName": "Battle Pass",
+                            "offerType": "StaticPrice",
+                            "prices": [
+                                {
+                                    "currencyType": "MtxCurrency",
+                                    "currencySubType": "",
+                                    "regularPrice": 950,
+                                    "finalPrice": 950
+                                }
+                            ],
+                            "categories": ["BATTLEPASS"],
+                            "meta": {
+                                "NewDisplayAssetPath": "BattlePass",
+                                "NewBanner": {
+                                    "value": "BP",
+                                    "intensity": "High"
+                                },
+                                "NewOfferText": "Unlock the Battle Pass"
+                            },
+                            "giftInfo": {
+                                "bIsEnabled": false
+                            },
+                            "refundable": true
+                        }
+                    ]
+                }
+            ]
+        };
+
+        return reply.code(200).send(catalogResponse);
+    });  
 }
