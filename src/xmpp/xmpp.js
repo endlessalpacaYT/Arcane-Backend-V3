@@ -12,7 +12,10 @@ const GAME_SERVER_PORT = process.env.GS_PORT || '7777';
 let wss;
 
 try {
-    wss = new WebSocket.Server({ port: process.env.XMPP_MM_PORT || 80 });
+    wss = new WebSocket.Server({
+        host: process.env.XMPP_MM_IP || '127.0.0.1',  
+        port: process.env.XMPP_MM_PORT || 80          
+    });
 }catch (err) {
     console.error("Unable To Start XMPP And Matchmaker Error: " + err);
 }
