@@ -24,6 +24,7 @@ const fastify = require('fastify')({
 const mongoose = require("mongoose");
 require("dotenv").config();
 
+const IP = process.env.IP || "0.0.0.0";
 const PORT = process.env.PORT || 3551; 
 
 fastify.addHook('onResponse', (request, reply, done) => {
@@ -78,7 +79,7 @@ async function initDB() {
 
 async function startMain() {
     try {
-        await fastify.listen({ port: PORT });
+        await fastify.listen({ port: PORT, host: IP });
         console.log('ArcaneV3 is running on http://localhost:' + PORT);
     } catch (err) {
         fastify.log.error(err);
