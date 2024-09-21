@@ -18,9 +18,9 @@ module.exports = async function (fastify, options) {
             });
         }
 
-        let battlePass = await BattlePass.findOne({ accountId });
+        let battlePass = await BattlePass.findOne({ accountId: accountId });
         if (!battlePass) {
-            battlePass = new BattlePass({ accountId });
+            battlePass = new BattlePass({ accountId: accountId });
             await battlePass.save();
         }
     
