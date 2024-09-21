@@ -1,6 +1,37 @@
 module.exports = async function (fastify, options) {
-    fastify.post('/fortnite/api/cloudstorage/system', async (request, reply) => {
-        return reply.code(200).send([]);
+    fastify.get('/fortnite/api/cloudstorage/system', async (request, reply) => {
+        const systemFiles = [
+            {
+                uniqueFilename: "defaultfile1",
+                filename: "DefaultFile1.json",
+                hash: "hash1",
+                hash256: "hash256_1",
+                length: 100,
+                contentType: "application/json",
+                uploaded: new Date().toISOString(),
+                storageType: "S3"
+            },
+            {
+                uniqueFilename: "defaultfile2",
+                filename: "DefaultFile2.json",
+                hash: "hash2",
+                hash256: "hash256_2",
+                length: 200,
+                contentType: "application/json",
+                uploaded: new Date().toISOString(),
+                storageType: "S3"
+            }
+        ];
+        return reply.code(200).send(systemFiles);
+    });
+
+    fastify.get('/fortnite/api/cloudstorage/user/:accountId/ClientSettings.Sav', async (request, reply) => {
+        const { accountId } = request.params;
+        return reply.code(200).send({
+            accountId: accountId,
+            filename: 'ClientSettings.Sav',
+            fileContent: 'settings-data'
+        });
     });
     
     fastify.get('/fortnite/api/cloudstorage/user/:accountId', async (request, reply) => {

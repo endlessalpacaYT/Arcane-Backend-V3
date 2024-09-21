@@ -67,6 +67,31 @@ fastify.get('/', async (request, reply) => {
     return { message: 'ArcaneBackendV2' };
 });
 
+fastify.setNotFoundHandler(function (request, reply) {
+  fastify.log.error({
+    method: request.method,
+    url: request.url,
+    message: 'Route not found',
+    statusCode: 404
+  });
+  reply.code(404).send({ error: 'Route not found' });
+});
+
+fastify.setErrorHandler(function (error, request, reply) {
+  const statusCode = reply.statusCode >= 400 ? reply.statusCode : 500;
+  fastify.log.error({
+    method: request.method,
+    url: request.url,
+    errorMessage: error.message,
+    statusCode: statusCode
+  });
+
+  reply.code(statusCode).send({
+    error: error.message || 'Internal Server Error',
+    statusCode: statusCode
+  });
+});
+
 async function initDB() {
     const mongoDB = process.env.MONGODB || "mongodb://127.0.0.1/ArcaneV3";
     try {
