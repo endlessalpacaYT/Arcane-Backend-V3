@@ -73,8 +73,13 @@ function DecodeBase64(str) {
     return Buffer.from(str, 'base64').toString();
 }
 
+function MakeID() {
+    return uuid.v4();
+}
+
 module.exports = {
     timeout,
     GetVersionInfo,
-    DecodeBase64
+    DecodeBase64,
+    MakeID
 }

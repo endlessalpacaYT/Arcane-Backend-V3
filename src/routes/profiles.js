@@ -5,6 +5,10 @@ const UserV2 = require('../Models/user/userv2.js');
 const BattlePass = require('../Models/profile/BattlePass.js');
 
 const athena = require("../responses/DefaultProfiles/athena.json");
+const account = require("./account.js");
+
+const Profile = require("../Models/profile/profile.js");
+const { createProfiles, validateProfile } = require("../utils/profile.js")
 
 module.exports = async function (fastify, options) {
     fastify.post('/fortnite/api/game/v2/profile/:accountId/client/PurchaseCatalogEntry', async (request, reply) => {
@@ -61,32 +65,29 @@ module.exports = async function (fastify, options) {
     
     fastify.post('/fortnite/api/game/v2/profile/:accountId/client/QueryProfile', async (request, reply) => {
         const { accountId } = request.params;
-    
-        let user = await UserV2.findOne({ Account: accountId }) || await User.findOne({ accountId: accountId });
-        if (!user) {
+        const { profileId } = request.query;
+
+        let profile = await Profile.findOne({ accountId });
+
+        if (!profile) {
+            const newProfiles = createProfiles(accountId);
+            profile = new Profile({
+                accountId: accountId,
+                profileId: accountId,  
+                profiles: newProfiles
+            });
+
+            await profile.save(); 
+        }
+
+        if (!await validateProfile(profileId, profile)) {
             return reply.code(404).send({
-                error: 'arcane.errors.user_not_found',
-                error_description: 'User not found in the database'
+                error: "arcane.errors.profile_not_found",
+                error_description: "The profile you requested does not exist"
             });
         }
 
-        let battlePass = await BattlePass.findOne({ accountId: accountId });
-        if (!battlePass) {
-            battlePass = new BattlePass({ accountId: accountId });
-            await battlePass.save();
-        }
-    
-        const updatedProfile = {
-            ...athena,
-            battlePass: {
-                unlocked: battlePass.unlocked,
-                currentLevel: battlePass.currentLevel,
-                currentTier: battlePass.currentTier,
-                unlockedRewards: battlePass.unlockedRewards
-            }
-        };
-    
-        return reply.code(200).send(updatedProfile);
+        return reply.code(200).send(profile.profiles[profileId]);
     });
     
     fastify.post('/fortnite/api/game/v2/profile/:accountId/client/SetCosmeticLoadout', async (request, reply) => {
