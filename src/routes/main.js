@@ -55,6 +55,16 @@ module.exports = async function (fastify, options) {
         });
     });
 
+    fastify.get('/fortnite/api/statsv2/leaderboards/:leaderboardId', async (request, reply) => {
+        const { leaderboardId } = request.params;
+
+        return reply.code(200).send({
+            leaderboardId: leaderboardId,
+            entries: [], 
+            totalSize: 0
+        });
+    });
+
     fastify.post("/fortnite/api/feedback/:feedbackId", async (request, reply) => {
         reply.code(200).send();
     });
