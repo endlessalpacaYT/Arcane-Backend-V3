@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path');
 require("dotenv").config();
 
 const app = express();
@@ -17,6 +18,7 @@ const v2Routes = require('./v2/index.js');
 
 app.use('/v1', v1Routes);
 app.use(v2Routes);
+app.use('/images/season', express.static(path.join(__dirname, 'v2', 'images', 'season')));
 
 async function startHTTPServer() {
     app.listen(PORT, () => {
