@@ -10,12 +10,6 @@ const FriendsSchema = new mongoose.Schema(
                 addedAt: { type: Date, default: Date.now },
                 lastInteraction: { type: Date, default: Date.now }
             }
-        ],
-        blocklist: [
-            {
-                blockId: { type: String, required: true },
-                blockedAt: { type: Date, default: Date.now }
-            }
         ]
     },
     { collection: "friends" }

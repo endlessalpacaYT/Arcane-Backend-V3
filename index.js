@@ -60,7 +60,11 @@ fastify.register(require('./src/routes/mcp'));
 fastify.register(require('./src/routes/matchmaker'));
 fastify.register(require('./src/routes/battlepass'));
 fastify.register(require('./src/responses/athena'));
+fastify.register(require('./src/routes/account'));
+fastify.register(require('./src/routes/friends'));
+fastify.register(require('./src/routes/party'));
 fastify.register(require('./src/routes/version'));
+fastify.register(require('./src/routes/contentpages'));
 fastify.register(require('./src/routes/timeline'));
 fastify.register(require('./src/routes/lightswitch'));
 

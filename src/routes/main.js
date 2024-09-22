@@ -24,13 +24,6 @@ module.exports = async function (fastify, options) {
         reply.code(204).send();
     });
 
-    fastify.get("/socialban/api/public/v1/:accountId", async (request, reply) => {
-        reply.send({
-            "bans": [],
-            "warnings": []
-        });
-    });
-
     fastify.get("/fortnite/api/game/v2/events/tournamentandhistory/:accountId/:region/WindowsClient", async (request, reply) => {
         reply.send({});
     });

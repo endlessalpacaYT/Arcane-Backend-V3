@@ -8,6 +8,7 @@ const UserV2 = require('../Models/user/userv2.js');
 const Token = require('../Models/token.js');
 const functions = require("../utils/functions.js");
 const { error } = require('console');
+const account = require('./account.js');
 
 let current_email;
 let current_username;
@@ -242,28 +243,116 @@ module.exports = async function (fastify, options) {
                 error_description: 'An internal server error occurred'
             });
         }
-    });    
-
-  fastify.get('/account/api/public/account/:accountId', async (request, reply) => {
+    });
+    
+    fastify.get('/account/api/oauth/verify', async (request, reply) => {
+        const { authorization } = request.headers;
+    
+        if (!authorization || !authorization.startsWith('Bearer ')) {
+            console.error("Authorization token is required");
+            return reply.code(400).send({
+                error: 'arcane.errors.missing_token',
+                error_description: 'Authorization token is required'
+            });
+        }
+    
+        const token = authorization.split(' ')[1];
+    
+        try {
+            const tokenEntry = await Token.findOne({ token: token });
+    
+            if (!tokenEntry || new Date() > tokenEntry.expiresAt) {
+                console.error("Token is either invalid or expired");
+                return reply.code(401).send({
+                    error: 'arcane.errors.invalid_token',
+                    error_description: 'Token is either invalid or expired'
+                });
+            }
+    
+            const user = await UserV2.findOne({ Account: tokenEntry.accountId }) || await User.findOne({ accountId: tokenEntry.accountId });
+            if (!user) {
+                console.error("User not found in the database");
+                return reply.code(404).send({
+                    error: 'arcane.errors.user_not_found',
+                    error_description: 'User not found in the database'
+                });
+            }
+    
+            return reply.code(200).send({
+                access_token: tokenEntry.token,
+                expires_in: Math.round((new Date(tokenEntry.expiresAt).getTime() - Date.now()) / 1000),
+                expires_at: tokenEntry.expiresAt.toISOString(),
+                token_type: 'bearer',
+                refresh_token: tokenEntry.refreshToken,
+                refresh_expires_in: Math.round((new Date(tokenEntry.refreshExpiresAt).getTime() - Date.now()) / 1000),
+                refresh_expires_at: tokenEntry.refreshExpiresAt.toISOString(),
+                account_id: tokenEntry.accountId,
+                client_id: 'arcane',
+                internal_client: true,
+                client_service: 'fortnite',
+                displayName: user.Username || user.username,
+                app: 'fortnite',
+                in_app_id: tokenEntry.accountId,
+                device_id: 'arcane'
+            });
+        } catch (error) {
+            console.error('Error verifying token:', error);
+            return reply.code(500).send({
+                error: 'arcane.errors.server_error',
+                error_description: 'An internal server error occurred'
+            });
+        }
+    });
+    
+    fastify.post('/fortnite/api/game/v2/profileToken/verify/:accountId', async (request, reply) => {
         const { accountId } = request.params;
+        const token = request.body.token;
 
+        const tokenEntry = await Token.findOne({ token: token });
+    
+        if (!tokenEntry || new Date() > tokenEntry.expiresAt) {
+            console.error("Token is either invalid or expired");
+            return reply.code(401).send({
+                error: 'arcane.errors.invalid_token',
+                error_description: 'Token is either invalid or expired'
+            });
+        }
+        
+        return reply.code(200).send({
+            "valid": true,
+            "token": tokenEntry.token,
+            "accountId": accountId
+        })
+    })
+
+    fastify.get('/account/api/public/account/:accountId?', async (request, reply) => {
+        const accountId = request.params.accountId || request.query.accountId;
+    
+        if (!accountId) {
+            return reply.code(400).send({
+                error: 'arcane.errors.missing_account_id',
+                error_description: 'Account ID is required'
+            });
+        }
+    
         let user = await UserV2.findOne({ Account: accountId }) || await User.findOne({ accountId: accountId });
-
+    
         if (!user) {
             return reply.code(404).send({
                 error: 'arcane.errors.user_not_found',
                 error_description: 'User not found in the database'
             });
         }
-
+    
         return reply.code(200).send({
             id: accountId,
-            displayName: user.Username || user.username,  
-            email: user.Email || user.email  
+            displayName: user.Username || user.username,
+            email: user.Email || user.email,
+            externalAuths: {}
         });
     }); 
 
-  fastify.get('/account/api/public/account/:accountId/externalAuths', async (request, reply) => {
+    fastify.get('/account/api/public/account/:accountId/externalAuths', async (request, reply) => {
         const { accountId } = request.params;
 
         return reply.code(200).send({
@@ -301,8 +390,8 @@ module.exports = async function (fastify, options) {
     });
 
   fastify.delete('/account/api/oauth/sessions/kill', async (request, reply) => {
-    return reply.code(200).send({ message: 'Sessions killed' });
-  });
+        return reply.code(200).send({ message: 'Sessions killed' });
+    });
 
   fastify.delete('/account/api/oauth/sessions/kill/:token', async (request, reply) => {
         const { token } = request.params;

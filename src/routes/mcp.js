@@ -78,4 +78,14 @@ module.exports = async function (fastify, options) {
 
         return reply.code(200).send(catalogResponse);
     });  
+
+    fastify.get('/content-controls/:accountId/rules/namespaces/fn', async (request, reply) => {
+        const { accountId } = request.params;
+    
+        return reply.code(200).send({
+            "accountId": accountId,
+            "namespace": "fn",
+            "rules": []
+        });
+    });    
 }

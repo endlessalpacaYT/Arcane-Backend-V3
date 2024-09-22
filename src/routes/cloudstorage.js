@@ -1,4 +1,16 @@
 module.exports = async function (fastify, options) {
+    // Just mocked all of these cuz idrk how to do cloudstorage
+    
+    fastify.addContentTypeParser('*', function (request, payload, done) {
+        let data = ''
+        payload.on('data', chunk => {
+            data += chunk
+        })
+        payload.on('end', () => {
+            done(null, data)
+        })
+    });
+    
     fastify.get('/fortnite/api/cloudstorage/system', async (request, reply) => {
         const systemFiles = [
             {
@@ -65,5 +77,14 @@ module.exports = async function (fastify, options) {
           uploaded: new Date().toISOString(),
           storageType: 'S3',
         });
-    });    
+    });
+    
+    fastify.put('/fortnite/api/cloudstorage/user/:accountId/ClientSettings.Sav', async (request, reply) => {
+        return reply.code(200).send({
+            "uniqueFilename": "ClientSettings.Sav",
+            "fileHash": "mocked_file_hash",
+            "fileSize": 1024,  
+            "uploadTime": new Date().toISOString()
+        });
+    });
 }

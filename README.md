@@ -2,8 +2,8 @@
 - First Public Backend Written In Fastify!
 
 # Recent Changes
-## v0.26
-- Yes, I am working on battlepass before the most important stuff!!!
+## v0.27
+- Fixed alot of missing route errors!!!
 
 ## Requirements
 - [nodes](https://nodejs.org/en)
